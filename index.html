@@ -2,8 +2,11 @@
 <html lang="ms">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, user-scalable=no"
+>
 
 <title>Keranamu Malaysia 🇲🇾</title>
 
@@ -23,22 +26,22 @@ html, body {
 }
 
 /* =========================
-   START PAGE
+   START
 ========================= */
 
 #start {
   position: fixed;
   inset: 0;
 
-  background: #061a40;
-  color: white;
-
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 
   text-align: center;
+
+  background: #061a40;
+  color: white;
 }
 
 .flag {
@@ -46,19 +49,20 @@ html, body {
 }
 
 #start h1 {
-  font-size: 9vw;
   margin: 10px 15px;
+  font-size: 9vw;
 }
 
 #start p {
+  margin: 10px 20px;
   font-size: 4.5vw;
   opacity: 0.75;
 }
 
 button {
-  margin-top: 20px;
+  margin-top: 25px;
 
-  padding: 18px 45px;
+  padding: 18px 50px;
 
   border: none;
   border-radius: 100px;
@@ -68,6 +72,8 @@ button {
 
   font-size: 7vw;
   font-weight: 900;
+
+  cursor: pointer;
 }
 
 /* =========================
@@ -87,24 +93,26 @@ button {
 
   background: black;
   color: white;
+
+  transition: background 0.35s ease;
 }
 
 /* =========================
-   ERROR SCREEN
+   ERROR TEXT
 ========================= */
 
 #error {
   width: 100%;
   padding: 8vw;
 
-  color: #00ff41;
-
   font-family: monospace;
   font-size: 5vw;
   line-height: 1.5;
+
+  color: #00ff41;
 }
 
-#errorTitle {
+.errorTitle {
   font-size: 11vw;
   font-weight: 900;
 }
@@ -114,7 +122,7 @@ button {
 ========================= */
 
 .glitch {
-  animation: glitch 0.13s infinite;
+  animation: glitch 0.14s infinite;
 }
 
 @keyframes glitch {
@@ -124,19 +132,19 @@ button {
   }
 
   20% {
-    transform: translate(-6px, 3px);
+    transform: translate(-5px, 3px);
   }
 
   40% {
-    transform: translate(7px, -3px);
+    transform: translate(6px, -3px);
   }
 
   60% {
-    transform: translate(-4px, 5px);
+    transform: translate(-4px, 4px);
   }
 
   80% {
-    transform: translate(5px, -4px);
+    transform: translate(5px, -2px);
   }
 
   100% {
@@ -145,25 +153,27 @@ button {
 }
 
 /* =========================
-   WORD
+   MAIN WORD
 ========================= */
 
 #word {
   position: absolute;
 
+  width: 100%;
+
+  text-align: center;
+
   white-space: nowrap;
 
   font-size: 20vw;
-  font-weight: 1000;
-
-  text-align: center;
+  font-weight: 900;
 
   text-shadow:
     4px 4px 12px rgba(0,0,0,0.35);
 }
 
 /* =========================
-   SCROLL
+   SCROLLING WORD
 ========================= */
 
 .scroll {
@@ -182,6 +192,27 @@ button {
 }
 
 /* =========================
+   FADE
+========================= */
+
+.fade {
+  animation: fadeIn 0.8s ease forwards;
+}
+
+@keyframes fadeIn {
+
+  from {
+    opacity: 0;
+    transform: scale(0.75);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* =========================
    PULSE
 ========================= */
 
@@ -192,44 +223,22 @@ button {
 @keyframes pulse {
 
   from {
-    transform: scale(0.88);
+    transform: scale(0.9);
   }
 
   to {
-    transform: scale(1.08);
-  }
-}
-
-/* =========================
-   FADE IN
-========================= */
-
-.fade {
-  animation: fade 1s ease forwards;
-}
-
-@keyframes fade {
-
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1);
+    transform: scale(1.06);
   }
 }
 
 </style>
 </head>
 
-
 <body>
 
 
 <!-- =========================
-     START SCREEN
+     START PAGE
 ========================= -->
 
 <div id="start">
@@ -246,16 +255,15 @@ button {
     Tunggu arahan sebelum tekan
   </p>
 
-  <button onclick="mula()">
+  <button id="mulaButton">
     MULA
   </button>
 
 </div>
 
 
-
 <!-- =========================
-     MAIN DISPLAY
+     SHOW
 ========================= -->
 
 <div id="screen">
@@ -267,24 +275,19 @@ button {
 </div>
 
 
-
 <!-- =========================
-     GLITCH AUDIO
+     AUDIO
 ========================= -->
 
 <audio
   id="glitchAudio"
-  src="mixkit-small-electric-glitch-2595.wav"
-  preload="auto">
+  src="./soundreality-glitch-effect-3-530928.mp3"
+  preload="auto"
+  playsinline>
 </audio>
 
 
-
 <script>
-
-/* =========================
-   ELEMENTS
-========================= */
 
 const start =
   document.getElementById("start");
@@ -301,18 +304,45 @@ const word =
 const glitchAudio =
   document.getElementById("glitchAudio");
 
+const mulaButton =
+  document.getElementById("mulaButton");
+
+
+let colourInterval = null;
 
 
 /* =========================
-   START
+   BUTTON
+========================= */
+
+mulaButton.addEventListener("click", mula);
+
+
+/* =========================
+   START SHOW
 ========================= */
 
 function mula() {
 
+  /*
+  IMPORTANT:
+  Audio starts IMMEDIATELY
+  after user presses MULA.
+  */
+
+  glitchAudio.volume = 1;
+  glitchAudio.currentTime = 0;
+
+  glitchAudio.play()
+    .catch(error => {
+      console.log("Audio error:", error);
+    });
+
+
+  /* SHOW MAIN SCREEN */
+
   start.style.display = "none";
-
   screen.style.display = "flex";
-
 
 
   /* FULL SCREEN */
@@ -326,31 +356,17 @@ function mula() {
   }
 
 
-
   /* =========================
-     0:00 — GLITCH SOUND
-  ========================= */
-
-  glitchAudio.currentTime = 0;
-
-  glitchAudio.play()
-    .catch(() => {});
-
-
-
-  /* =========================
-     0:00 — SYSTEM ERROR
+     0:00
+     SYSTEM ERROR
   ========================= */
 
   screen.style.background = "black";
 
   errorBox.innerHTML = `
 
-    <div id="errorTitle"
-         class="glitch">
-
+    <div class="errorTitle glitch">
       SYSTEM ERROR
-
     </div>
 
     CONNECTION LOST...
@@ -359,29 +375,24 @@ function mula() {
 
     Attempting recovery...
 
-    <br>
+    <br><br>
 
     [■■□□□□□□□□] 20%
 
   `;
 
 
-
   /* =========================
-     0:01 — IDENTITY ERROR
+     0:01
+     IDENTITY NOT FOUND
   ========================= */
 
   setTimeout(() => {
 
-    playGlitchAgain();
-
     errorBox.innerHTML = `
 
-      <div id="errorTitle"
-           class="glitch">
-
+      <div class="errorTitle glitch">
         ERROR 404
-
       </div>
 
       IDENTITY NOT FOUND.
@@ -390,7 +401,7 @@ function mula() {
 
       Searching system...
 
-      <br>
+      <br><br>
 
       [■■■■■□□□□□] 50%
 
@@ -399,22 +410,17 @@ function mula() {
   }, 1000);
 
 
-
   /* =========================
-     0:02 — JATI DIRI
+     0:02
+     JATI DIRI NOT FOUND
   ========================= */
 
   setTimeout(() => {
 
-    playGlitchAgain();
-
     errorBox.innerHTML = `
 
-      <div id="errorTitle"
-           class="glitch">
-
+      <div class="errorTitle glitch">
         CRITICAL ERROR
-
       </div>
 
       JATI DIRI NOT FOUND.
@@ -423,7 +429,7 @@ function mula() {
 
       RECOVERING...
 
-      <br>
+      <br><br>
 
       [■■■■■■■■□□] 80%
 
@@ -432,16 +438,20 @@ function mula() {
   }, 2000);
 
 
-
   /* =========================
-     0:03 — ALMOST DONE
+     0:03
+     100%
   ========================= */
 
   setTimeout(() => {
 
     errorBox.innerHTML = `
 
-      RECOVERING SYSTEM...
+      <div class="errorTitle">
+        RECOVERING
+      </div>
+
+      SYSTEM RECOVERY...
 
       <br><br>
 
@@ -452,66 +462,95 @@ function mula() {
   }, 3000);
 
 
-
   /* =========================
-     0:04 — BLACKOUT
+     0:04
+     FINAL GLITCH
   ========================= */
 
   setTimeout(() => {
 
-    errorBox.innerHTML = "";
+    errorBox.innerHTML = `
 
-    word.innerHTML = "";
+      <div class="errorTitle glitch">
+        ██████████
+      </div>
 
-    screen.style.background = "black";
+      REBOOTING...
+
+    `;
 
   }, 4000);
 
 
-
   /* =========================
-     0:04.5 — RESTORED
+     0:05
+     STOP AUDIO + BLACKOUT
   ========================= */
 
   setTimeout(() => {
 
-    playGlitchAgain();
+    /* STOP THE 12 SECOND AUDIO */
 
-    word.style.color = "#00ff41";
+    glitchAudio.pause();
+    glitchAudio.currentTime = 0;
+
+
+    /* BLACK SCREEN */
+
+    errorBox.innerHTML = "";
+    word.innerHTML = "";
+
+    screen.style.background = "black";
+
+  }, 5000);
+
+
+  /* =========================
+     0:05.5
+     SYSTEM RESTORED
+  ========================= */
+
+  setTimeout(() => {
+
+    word.style.width = "100%";
+    word.style.whiteSpace = "nowrap";
 
     word.style.fontSize = "10vw";
+
+    word.style.color = "#00ff41";
 
     word.className = "fade";
 
     word.innerHTML =
       "SYSTEM RESTORED ✓";
 
-  }, 4500);
-
+  }, 5500);
 
 
   /* =========================
-     0:05 — MALAYSIA
+     0:06.5
+     MALAYSIA
   ========================= */
 
   setTimeout(() => {
 
     word.style.fontSize = "20vw";
-
     word.style.color = "white";
 
-    word.innerHTML = "MALAYSIA";
+    word.innerHTML =
+      "MALAYSIA";
 
-    word.className = "scroll";
+    word.className =
+      "scroll";
 
     startColours();
 
-  }, 5000);
-
+  }, 6500);
 
 
   /* =========================
-     0:08 — BERSATU
+     0:09.5
+     BERSATU
   ========================= */
 
   setTimeout(() => {
@@ -519,12 +558,12 @@ function mula() {
     word.innerHTML =
       "BERSATU";
 
-  }, 8000);
-
+  }, 9500);
 
 
   /* =========================
-     0:11 — JATI DIRI
+     0:12.5
+     JATI DIRI
   ========================= */
 
   setTimeout(() => {
@@ -532,12 +571,12 @@ function mula() {
     word.innerHTML =
       "JATI DIRI";
 
-  }, 11000);
-
+  }, 12500);
 
 
   /* =========================
-     0:14 — FINAL
+     0:15.5
+     FLAG
   ========================= */
 
   setTimeout(() => {
@@ -551,7 +590,7 @@ function mula() {
       "white";
 
     word.style.fontSize =
-      "17vw";
+      "22vw";
 
     word.className =
       "pulse";
@@ -559,12 +598,12 @@ function mula() {
     word.innerHTML =
       "🇲🇾";
 
-  }, 14000);
-
+  }, 15500);
 
 
   /* =========================
-     0:15 — KERANAMU
+     0:17
+     FINAL
   ========================= */
 
   setTimeout(() => {
@@ -572,61 +611,37 @@ function mula() {
     word.style.fontSize =
       "13vw";
 
-    word.style.whiteSpace =
-      "normal";
-
     word.style.width =
       "95%";
+
+    word.style.whiteSpace =
+      "normal";
 
     word.innerHTML =
       "KERANAMU<br>MALAYSIA";
 
-  }, 15000);
+  }, 17000);
 
 }
-
-
-
-/* =========================
-   REPLAY GLITCH SOUND
-========================= */
-
-function playGlitchAgain() {
-
-  glitchAudio.pause();
-
-  glitchAudio.currentTime = 0;
-
-  glitchAudio.play()
-    .catch(() => {});
-
-}
-
 
 
 /* =========================
    MALAYSIA COLOURS
 ========================= */
 
-const colours = [
-
-  "#D71920",  // RED 🇲🇾
-
-  "#0033A0",  // BLUE 🇲🇾
-
-  "#FFD100",  // YELLOW 🇲🇾
-
-  "#FFFFFF"   // WHITE 🇲🇾
-
-];
-
-let colourInterval;
-
-
-
 function startColours() {
 
+  const colours = [
+
+    "#D71920",  // RED
+    "#0033A0",  // BLUE
+    "#FFD100",  // YELLOW
+    "#FFFFFF"   // WHITE
+
+  ];
+
   let i = 0;
+
 
   colourInterval =
     setInterval(() => {
@@ -638,12 +653,11 @@ function startColours() {
         colour;
 
 
-
-      /* DARK TEXT ON LIGHT COLOURS */
+      /* TEXT COLOUR */
 
       if (
-        colour === "#FFFFFF" ||
-        colour === "#FFD100"
+        colour === "#FFD100" ||
+        colour === "#FFFFFF"
       ) {
 
         word.style.color =
@@ -663,17 +677,26 @@ function startColours() {
         (i + 1) %
         colours.length;
 
-    }, 900);
+    }, 1000);
 
 }
 
 
+/* =========================
+   STOP COLOURS
+========================= */
 
 function stopColours() {
 
-  clearInterval(
-    colourInterval
-  );
+  if (colourInterval) {
+
+    clearInterval(
+      colourInterval
+    );
+
+    colourInterval = null;
+
+  }
 
 }
 
