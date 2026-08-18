@@ -2,185 +2,681 @@
 <html lang="ms">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no">
+
 <title>Keranamu Malaysia 🇲🇾</title>
 
 <style>
-  * { box-sizing: border-box; }
 
-  body {
-    margin: 0;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    font-family: Arial, sans-serif;
-    background: #071a40;
-    color: white;
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: black;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* =========================
+   START PAGE
+========================= */
+
+#start {
+  position: fixed;
+  inset: 0;
+
+  background: #061a40;
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+.flag {
+  font-size: 22vw;
+}
+
+#start h1 {
+  font-size: 9vw;
+  margin: 10px 15px;
+}
+
+#start p {
+  font-size: 4.5vw;
+  opacity: 0.75;
+}
+
+button {
+  margin-top: 20px;
+
+  padding: 18px 45px;
+
+  border: none;
+  border-radius: 100px;
+
+  background: white;
+  color: #061a40;
+
+  font-size: 7vw;
+  font-weight: 900;
+}
+
+/* =========================
+   MAIN SCREEN
+========================= */
+
+#screen {
+  position: fixed;
+  inset: 0;
+
+  display: none;
+
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  background: black;
+  color: white;
+}
+
+/* =========================
+   ERROR SCREEN
+========================= */
+
+#error {
+  width: 100%;
+  padding: 8vw;
+
+  color: #00ff41;
+
+  font-family: monospace;
+  font-size: 5vw;
+  line-height: 1.5;
+}
+
+#errorTitle {
+  font-size: 11vw;
+  font-weight: 900;
+}
+
+/* =========================
+   GLITCH
+========================= */
+
+.glitch {
+  animation: glitch 0.13s infinite;
+}
+
+@keyframes glitch {
+
+  0% {
+    transform: translate(0);
   }
 
-  #start {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    background: #071a40;
-    z-index: 10;
+  20% {
+    transform: translate(-6px, 3px);
   }
 
-  #start h1 {
-    font-size: 12vw;
-    margin: 0;
+  40% {
+    transform: translate(7px, -3px);
   }
 
-  #start p {
-    font-size: 5vw;
-    margin: 20px;
+  60% {
+    transform: translate(-4px, 5px);
   }
 
-  button {
-    border: none;
-    border-radius: 999px;
-    padding: 20px 45px;
-    font-size: 8vw;
-    font-weight: bold;
-    background: white;
-    color: #071a40;
+  80% {
+    transform: translate(5px, -4px);
   }
 
-  #show {
-    position: fixed;
-    inset: 0;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.5s;
+  100% {
+    transform: translate(0);
+  }
+}
+
+/* =========================
+   WORD
+========================= */
+
+#word {
+  position: absolute;
+
+  white-space: nowrap;
+
+  font-size: 20vw;
+  font-weight: 1000;
+
+  text-align: center;
+
+  text-shadow:
+    4px 4px 12px rgba(0,0,0,0.35);
+}
+
+/* =========================
+   SCROLL
+========================= */
+
+.scroll {
+  animation: scrollText 3s linear infinite;
+}
+
+@keyframes scrollText {
+
+  from {
+    transform: translateX(120vw);
   }
 
-  #text {
-    width: 100%;
-    text-align: center;
-    font-size: 15vw;
-    font-weight: 900;
-    white-space: nowrap;
-    text-shadow: 0 4px 15px rgba(0,0,0,.4);
+  to {
+    transform: translateX(-120vw);
+  }
+}
+
+/* =========================
+   PULSE
+========================= */
+
+.pulse {
+  animation: pulse 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+
+  from {
+    transform: scale(0.88);
   }
 
-  .scroll {
-    animation: scroll 4s linear infinite;
+  to {
+    transform: scale(1.08);
+  }
+}
+
+/* =========================
+   FADE IN
+========================= */
+
+.fade {
+  animation: fade 1s ease forwards;
+}
+
+@keyframes fade {
+
+  from {
+    opacity: 0;
+    transform: scale(0.8);
   }
 
-  .pulse {
-    animation: pulse 0.8s ease-in-out infinite alternate;
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
+}
 
-  @keyframes scroll {
-    from { transform: translateX(110vw); }
-    to   { transform: translateX(-110vw); }
-  }
-
-  @keyframes pulse {
-    from { transform: scale(0.9); opacity: 0.7; }
-    to   { transform: scale(1.1); opacity: 1; }
-  }
 </style>
 </head>
 
+
 <body>
 
+
+<!-- =========================
+     START SCREEN
+========================= -->
+
 <div id="start">
-  <h1>🇲🇾</h1>
-  <p>KERANAMU MALAYSIA</p>
-  <button onclick="mula()">MULA</button>
+
+  <div class="flag">
+    🇲🇾
+  </div>
+
+  <h1>
+    KERANAMU MALAYSIA
+  </h1>
+
+  <p>
+    Tunggu arahan sebelum tekan
+  </p>
+
+  <button onclick="mula()">
+    MULA
+  </button>
+
 </div>
 
-<div id="show">
-  <div id="text"></div>
+
+
+<!-- =========================
+     MAIN DISPLAY
+========================= -->
+
+<div id="screen">
+
+  <div id="error"></div>
+
+  <div id="word"></div>
+
 </div>
+
+
+
+<!-- =========================
+     GLITCH AUDIO
+========================= -->
+
+<audio
+  id="glitchAudio"
+  src="mixkit-small-electric-glitch-2595.wav"
+  preload="auto">
+</audio>
+
+
 
 <script>
-const show = document.getElementById("show");
-const text = document.getElementById("text");
 
-function setScene(bg, words, mode = "") {
-  show.style.background = bg;
-  text.innerHTML = words;
-  text.className = mode;
-}
+/* =========================
+   ELEMENTS
+========================= */
+
+const start =
+  document.getElementById("start");
+
+const screen =
+  document.getElementById("screen");
+
+const errorBox =
+  document.getElementById("error");
+
+const word =
+  document.getElementById("word");
+
+const glitchAudio =
+  document.getElementById("glitchAudio");
+
+
+
+/* =========================
+   START
+========================= */
 
 function mula() {
-  document.getElementById("start").style.display = "none";
-  show.style.display = "flex";
 
-  // 尝试进入全屏
+  start.style.display = "none";
+
+  screen.style.display = "flex";
+
+
+
+  /* FULL SCREEN */
+
   if (document.documentElement.requestFullscreen) {
-    document.documentElement.requestFullscreen().catch(() => {});
+
+    document.documentElement
+      .requestFullscreen()
+      .catch(() => {});
+
   }
 
-  // 0秒
-  setScene("#0033A0", "3");
+
+
+  /* =========================
+     0:00 — GLITCH SOUND
+  ========================= */
+
+  glitchAudio.currentTime = 0;
+
+  glitchAudio.play()
+    .catch(() => {});
+
+
+
+  /* =========================
+     0:00 — SYSTEM ERROR
+  ========================= */
+
+  screen.style.background = "black";
+
+  errorBox.innerHTML = `
+
+    <div id="errorTitle"
+         class="glitch">
+
+      SYSTEM ERROR
+
+    </div>
+
+    CONNECTION LOST...
+
+    <br><br>
+
+    Attempting recovery...
+
+    <br>
+
+    [■■□□□□□□□□] 20%
+
+  `;
+
+
+
+  /* =========================
+     0:01 — IDENTITY ERROR
+  ========================= */
 
   setTimeout(() => {
-    setScene("#FFD100", "2");
+
+    playGlitchAgain();
+
+    errorBox.innerHTML = `
+
+      <div id="errorTitle"
+           class="glitch">
+
+        ERROR 404
+
+      </div>
+
+      IDENTITY NOT FOUND.
+
+      <br><br>
+
+      Searching system...
+
+      <br>
+
+      [■■■■■□□□□□] 50%
+
+    `;
+
   }, 1000);
 
+
+
+  /* =========================
+     0:02 — JATI DIRI
+  ========================= */
+
   setTimeout(() => {
-    setScene("#D71920", "1");
+
+    playGlitchAgain();
+
+    errorBox.innerHTML = `
+
+      <div id="errorTitle"
+           class="glitch">
+
+        CRITICAL ERROR
+
+      </div>
+
+      JATI DIRI NOT FOUND.
+
+      <br><br>
+
+      RECOVERING...
+
+      <br>
+
+      [■■■■■■■■□□] 80%
+
+    `;
+
   }, 2000);
 
-  // 3秒
+
+
+  /* =========================
+     0:03 — ALMOST DONE
+  ========================= */
+
   setTimeout(() => {
-    setScene("#0033A0", "🇲🇾<br>MALAYSIA", "pulse");
+
+    errorBox.innerHTML = `
+
+      RECOVERING SYSTEM...
+
+      <br><br>
+
+      [■■■■■■■■■■] 100%
+
+    `;
+
   }, 3000);
 
-  // 7秒
-  setTimeout(() => {
-    setScene("#D71920", "BERSATU", "scroll");
-  }, 7000);
 
-  // 12秒
-  setTimeout(() => {
-    setScene("#FFFFFF", "🇲🇾", "pulse");
-    text.style.color = "#0033A0";
-  }, 12000);
 
-  // 16秒
-  setTimeout(() => {
-    text.style.color = "white";
-    setScene("#0033A0", "KERANAMU MALAYSIA", "scroll");
-  }, 16000);
+  /* =========================
+     0:04 — BLACKOUT
+  ========================= */
 
-  // 22秒开始循环灯光
-  setTimeout(lightLoop, 22000);
+  setTimeout(() => {
+
+    errorBox.innerHTML = "";
+
+    word.innerHTML = "";
+
+    screen.style.background = "black";
+
+  }, 4000);
+
+
+
+  /* =========================
+     0:04.5 — RESTORED
+  ========================= */
+
+  setTimeout(() => {
+
+    playGlitchAgain();
+
+    word.style.color = "#00ff41";
+
+    word.style.fontSize = "10vw";
+
+    word.className = "fade";
+
+    word.innerHTML =
+      "SYSTEM RESTORED ✓";
+
+  }, 4500);
+
+
+
+  /* =========================
+     0:05 — MALAYSIA
+  ========================= */
+
+  setTimeout(() => {
+
+    word.style.fontSize = "20vw";
+
+    word.style.color = "white";
+
+    word.innerHTML = "MALAYSIA";
+
+    word.className = "scroll";
+
+    startColours();
+
+  }, 5000);
+
+
+
+  /* =========================
+     0:08 — BERSATU
+  ========================= */
+
+  setTimeout(() => {
+
+    word.innerHTML =
+      "BERSATU";
+
+  }, 8000);
+
+
+
+  /* =========================
+     0:11 — JATI DIRI
+  ========================= */
+
+  setTimeout(() => {
+
+    word.innerHTML =
+      "JATI DIRI";
+
+  }, 11000);
+
+
+
+  /* =========================
+     0:14 — FINAL
+  ========================= */
+
+  setTimeout(() => {
+
+    stopColours();
+
+    screen.style.background =
+      "#0033A0";
+
+    word.style.color =
+      "white";
+
+    word.style.fontSize =
+      "17vw";
+
+    word.className =
+      "pulse";
+
+    word.innerHTML =
+      "🇲🇾";
+
+  }, 14000);
+
+
+
+  /* =========================
+     0:15 — KERANAMU
+  ========================= */
+
+  setTimeout(() => {
+
+    word.style.fontSize =
+      "13vw";
+
+    word.style.whiteSpace =
+      "normal";
+
+    word.style.width =
+      "95%";
+
+    word.innerHTML =
+      "KERANAMU<br>MALAYSIA";
+
+  }, 15000);
+
 }
 
-function lightLoop() {
-  const colours = [
-    "#D71920", // 红
-    "#FFFFFF", // 白
-    "#0033A0", // 蓝
-    "#FFD100"  // 黄
-  ];
+
+
+/* =========================
+   REPLAY GLITCH SOUND
+========================= */
+
+function playGlitchAgain() {
+
+  glitchAudio.pause();
+
+  glitchAudio.currentTime = 0;
+
+  glitchAudio.play()
+    .catch(() => {});
+
+}
+
+
+
+/* =========================
+   MALAYSIA COLOURS
+========================= */
+
+const colours = [
+
+  "#D71920",  // RED 🇲🇾
+
+  "#0033A0",  // BLUE 🇲🇾
+
+  "#FFD100",  // YELLOW 🇲🇾
+
+  "#FFFFFF"   // WHITE 🇲🇾
+
+];
+
+let colourInterval;
+
+
+
+function startColours() {
 
   let i = 0;
 
-  setInterval(() => {
-    show.style.background = colours[i];
+  colourInterval =
+    setInterval(() => {
 
-    if (colours[i] === "#FFFFFF" || colours[i] === "#FFD100") {
-      text.style.color = "#071a40";
-    } else {
-      text.style.color = "white";
-    }
+      const colour =
+        colours[i];
 
-    text.innerHTML = i % 2 === 0 ? "🇲🇾" : "MALAYSIA";
-    text.className = "pulse";
+      screen.style.background =
+        colour;
 
-    i = (i + 1) % colours.length;
-  }, 1200);
+
+
+      /* DARK TEXT ON LIGHT COLOURS */
+
+      if (
+        colour === "#FFFFFF" ||
+        colour === "#FFD100"
+      ) {
+
+        word.style.color =
+          "#061A40";
+
+      }
+
+      else {
+
+        word.style.color =
+          "white";
+
+      }
+
+
+      i =
+        (i + 1) %
+        colours.length;
+
+    }, 900);
+
 }
+
+
+
+function stopColours() {
+
+  clearInterval(
+    colourInterval
+  );
+
+}
+
 </script>
 
 </body>
