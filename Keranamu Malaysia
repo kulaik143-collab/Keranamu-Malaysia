@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Keranamu Malaysia 🇲🇾</title>
+
+<style>
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background: #071a40;
+    color: white;
+  }
+
+  #start {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: #071a40;
+    z-index: 10;
+  }
+
+  #start h1 {
+    font-size: 12vw;
+    margin: 0;
+  }
+
+  #start p {
+    font-size: 5vw;
+    margin: 20px;
+  }
+
+  button {
+    border: none;
+    border-radius: 999px;
+    padding: 20px 45px;
+    font-size: 8vw;
+    font-weight: bold;
+    background: white;
+    color: #071a40;
+  }
+
+  #show {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.5s;
+  }
+
+  #text {
+    width: 100%;
+    text-align: center;
+    font-size: 15vw;
+    font-weight: 900;
+    white-space: nowrap;
+    text-shadow: 0 4px 15px rgba(0,0,0,.4);
+  }
+
+  .scroll {
+    animation: scroll 4s linear infinite;
+  }
+
+  .pulse {
+    animation: pulse 0.8s ease-in-out infinite alternate;
+  }
+
+  @keyframes scroll {
+    from { transform: translateX(110vw); }
+    to   { transform: translateX(-110vw); }
+  }
+
+  @keyframes pulse {
+    from { transform: scale(0.9); opacity: 0.7; }
+    to   { transform: scale(1.1); opacity: 1; }
+  }
+</style>
+</head>
+
+<body>
+
+<div id="start">
+  <h1>🇲🇾</h1>
+  <p>KERANAMU MALAYSIA</p>
+  <button onclick="mula()">MULA</button>
+</div>
+
+<div id="show">
+  <div id="text"></div>
+</div>
+
+<script>
+const show = document.getElementById("show");
+const text = document.getElementById("text");
+
+function setScene(bg, words, mode = "") {
+  show.style.background = bg;
+  text.innerHTML = words;
+  text.className = mode;
+}
+
+function mula() {
+  document.getElementById("start").style.display = "none";
+  show.style.display = "flex";
+
+  // 尝试进入全屏
+  if (document.documentElement.requestFullscreen) {
+    document.documentElement.requestFullscreen().catch(() => {});
+  }
+
+  // 0秒
+  setScene("#0033A0", "3");
+
+  setTimeout(() => {
+    setScene("#FFD100", "2");
+  }, 1000);
+
+  setTimeout(() => {
+    setScene("#D71920", "1");
+  }, 2000);
+
+  // 3秒
+  setTimeout(() => {
+    setScene("#0033A0", "🇲🇾<br>MALAYSIA", "pulse");
+  }, 3000);
+
+  // 7秒
+  setTimeout(() => {
+    setScene("#D71920", "BERSATU", "scroll");
+  }, 7000);
+
+  // 12秒
+  setTimeout(() => {
+    setScene("#FFFFFF", "🇲🇾", "pulse");
+    text.style.color = "#0033A0";
+  }, 12000);
+
+  // 16秒
+  setTimeout(() => {
+    text.style.color = "white";
+    setScene("#0033A0", "KERANAMU MALAYSIA", "scroll");
+  }, 16000);
+
+  // 22秒开始循环灯光
+  setTimeout(lightLoop, 22000);
+}
+
+function lightLoop() {
+  const colours = [
+    "#D71920", // 红
+    "#FFFFFF", // 白
+    "#0033A0", // 蓝
+    "#FFD100"  // 黄
+  ];
+
+  let i = 0;
+
+  setInterval(() => {
+    show.style.background = colours[i];
+
+    if (colours[i] === "#FFFFFF" || colours[i] === "#FFD100") {
+      text.style.color = "#071a40";
+    } else {
+      text.style.color = "white";
+    }
+
+    text.innerHTML = i % 2 === 0 ? "🇲🇾" : "MALAYSIA";
+    text.className = "pulse";
+
+    i = (i + 1) % colours.length;
+  }, 1200);
+}
+</script>
+
+</body>
+</html>
